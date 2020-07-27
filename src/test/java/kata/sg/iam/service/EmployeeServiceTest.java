@@ -1,11 +1,9 @@
 package kata.sg.iam.service;
 
 import kata.sg.iam.database.AbstractDatabaseTest;
+import kata.sg.iam.model.dto.user.EmployeePayload;
 import kata.sg.iam.model.entity.Employee;
-import kata.sg.iam.model.entity.EmployeeRole;
-import kata.sg.iam.model.entity.Role;
 import kata.sg.iam.repository.EmployeeRepository;
-import kata.sg.iam.repository.RoleRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -24,9 +22,6 @@ public class EmployeeServiceTest extends AbstractDatabaseTest {
 
     @Autowired
     private EmployeeRepository employeeRepository;
-
-    @Autowired
-    private RoleRepository roleRepository;
 
     @Autowired
     private EmployeeService employeeService;
@@ -53,33 +48,29 @@ public class EmployeeServiceTest extends AbstractDatabaseTest {
     @Test
     public void should_create_employee_without_role() {
 
-        Employee expectedEmployee = Employee.builder()
+        EmployeePayload expectedEmployee = EmployeePayload.builder()
                 .firstname("new")
                 .lastname("employee")
                 .build();
         Employee savedEmployee = employeeService.createEmployee(expectedEmployee);
-        assertThat(savedEmployee).isEqualTo(expectedEmployee);
+        assertThat(savedEmployee.getFirstname()).isEqualTo(expectedEmployee.getFirstname());
+        assertThat(savedEmployee.getLastname()).isEqualTo(expectedEmployee.getLastname());
     }
 
     @Test
     public void should_create_employee_with_role() {
 
-        Role role = roleRepository.save(Role.builder()
-                .code("DEV")
-                .description("Developpeur")
-                .build());
-
-        Employee expectedEmployee = Employee.builder()
+        EmployeePayload expectedEmployee = EmployeePayload.builder()
                 .firstname("new")
                 .lastname("employee")
+                .roles(new HashSet<String>(){{
+                    add("DEV");
+                }})
                 .build();
 
-        expectedEmployee.setRoles(new HashSet<EmployeeRole>(){{
-            add(new EmployeeRole(expectedEmployee, role));
-        }});
-
         Employee savedEmployee = employeeService.createEmployee(expectedEmployee);
-        assertThat(savedEmployee).isEqualTo(expectedEmployee);
+        assertThat(savedEmployee.getFirstname()).isEqualTo(expectedEmployee.getFirstname());
+        assertThat(savedEmployee.getLastname()).isEqualTo(expectedEmployee.getLastname());
     }
 
 

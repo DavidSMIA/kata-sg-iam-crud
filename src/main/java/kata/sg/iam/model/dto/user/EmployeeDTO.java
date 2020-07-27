@@ -28,7 +28,9 @@ public class EmployeeDTO {
         id = employee.getId();
         firstname = employee.getFirstname();
         lastname = employee.getLastname();
-        roles = employee.getRoles().stream().map( r -> new EmployeeRoleDTO(r.getRole())).collect(Collectors.toSet());
+        if(employee.getRoles() != null) {
+            roles = employee.getRoles().stream().map(r -> new EmployeeRoleDTO(r.getRole())).collect(Collectors.toSet());
+        }
     }
 
     public Employee toEmployee() {

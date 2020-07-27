@@ -43,7 +43,7 @@ public class EmployeeController {
 
     @Operation(summary = "Create employee", tags = { "employee" })
     @PostMapping
-    public EmployeeDTO createEmployee(@RequestBody EmployeeDTO employeeDTO) { //TODO utiliser un objet EmployePayload à la place du dto.
-        return new EmployeeDTO(employeeService.createEmployee(employeeDTO.toEmployee()));
+    public EmployeeDTO createEmployee(@RequestBody EmployeePayload userPayload) {
+        return new EmployeeDTO(employeeService.createEmployee(userPayload));
     }
 }

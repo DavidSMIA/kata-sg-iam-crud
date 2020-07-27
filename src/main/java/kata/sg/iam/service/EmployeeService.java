@@ -13,10 +13,10 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-/** TODO : Voir si on conserve une couche service ou directement Controller -> repository **/
 @Component
 public class EmployeeService {
 
@@ -34,7 +34,16 @@ public class EmployeeService {
         return employeeRepository.findAll(PageRequest.of(page, size)).toList();
     }
 
-    public Employee createEmployee(Employee employee) {
+    public Employee createEmployee(EmployeePayload employeePayload) {
+        Employee employee = Employee.builder()
+                .firstname(employeePayload.getFirstname())
+                .lastname(employeePayload.getLastname())
+                .build();
+
+        if(employeePayload.getRoles() != null) {
+            employee.setRoles(findEmployeeRolesFromCode(employee, employeePayload.getRoles()));
+        }
+
         return employeeRepository.save(employee);
     }
 
@@ -42,15 +51,22 @@ public class EmployeeService {
         return employeeRepository.findById(UUID.fromString(id));
     }
 
-    public Employee updateEmployee(String userId, EmployeePayload userPayload) {
+    public Employee updateEmployee(String userId, EmployeePayload employeePayload) {
         Employee employee = employeeRepository.findById(UUID.fromString(userId)).orElseThrow(() -> new EmployeeNotFoundException(userId));
-        List<Role> allRoles = roleRepository.findAllByCodeIn(userPayload.getRoles());
-
-        employee.setRoles(allRoles.stream().map( r-> new EmployeeRole(employee, r)).collect(Collectors.toSet()));
-        employee.setFirstname(userPayload.getFirstname());
-        employee.setLastname(userPayload.getLastname());
+        if(employeePayload.getRoles() != null) {
+            employee.setRoles(findEmployeeRolesFromCode(employee, employeePayload.getRoles()));
+        }
+        employee.setFirstname(employeePayload.getFirstname());
+        employee.setLastname(employeePayload.getLastname());
 
         return employeeRepository.save(employee);
 
+    }
+
+    private Set<EmployeeRole> findEmployeeRolesFromCode(Employee employee, Set<String> roleCodes) {
+        List<Role> allRoles = roleRepository.findAllByCodeIn(roleCodes);
+        //TODO : Gerer le cas ou un role n'existe pas.
+
+        return allRoles.stream().map( r-> new EmployeeRole(employee, r)).collect(Collectors.toSet());
     }
 }
