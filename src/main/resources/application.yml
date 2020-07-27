@@ -16,6 +16,14 @@ spring:
         dialect: org.hibernate.dialect.PostgreSQLDialect
         jdbc:
           time_zone: UTC
+server:
+  ssl:
+    key-store: classpath:sgiamkata.p12
+    key-store-password: password
+    key-store-type: pkcs12
+    key-alias: sgiamkata
+    key-password: password
+  port: 8443
 
 management:
   security:
