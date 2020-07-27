@@ -1,6 +1,22 @@
 spring:
   application:
     name: kata-sg-iam-crud
+  datasource:
+    url: jdbc:postgresql://localhost/kata_sgiam_database
+    username: sgiam_user
+    password: secure_password
+  flyway:
+    enabled: true
+  jpa:
+    show-sql: false
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        jdbc:
+          time_zone: UTC
+
 management:
   security:
     enabled: false

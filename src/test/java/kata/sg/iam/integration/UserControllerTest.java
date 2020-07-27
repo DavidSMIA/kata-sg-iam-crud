@@ -2,14 +2,18 @@ package kata.sg.iam.integration;
 
 
 import io.restassured.RestAssured;
+import kata.sg.iam.database.AbstractDatabaseTest;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
+import org.springframework.test.context.ActiveProfiles;
+
 import javax.annotation.PostConstruct;
 
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class UserControllerTest {
+@ActiveProfiles("test")
+public class UserControllerTest extends AbstractDatabaseTest {
 
     @LocalServerPort
     private int port;
@@ -32,13 +36,13 @@ public class UserControllerTest {
     }
 
     @Test
-    public void get_user_should_return_status_200() {
+    public void get_unknown_user_should_return_status_404() {
         RestAssured.given().
                 when().
                 get(uri+"/api/v1/users/1").
                 then().
                 assertThat().
-                statusCode(200);
+                statusCode(404);
     }
 
 }
