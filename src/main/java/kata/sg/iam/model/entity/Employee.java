@@ -40,7 +40,9 @@ public class Employee implements Auditable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Employee employee = (Employee) o;
-        return Objects.equals(lastname, employee.getLastname()) &&  Objects.equals(firstname, employee.getFirstname());
+        return Objects.equals(lastname, employee.getLastname())
+                &&  Objects.equals(firstname, employee.getFirstname())
+                && Objects.equals(id, employee.getId());
     }
 
     @Override

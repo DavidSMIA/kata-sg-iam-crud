@@ -57,8 +57,8 @@ public class EmployeeServiceTest extends AbstractDatabaseTest {
                 .firstname("new")
                 .lastname("employee")
                 .build();
-        Employee employee = employeeService.createEmployee(expectedEmployee);
-        assertThat(employee).isEqualTo(expectedEmployee);
+        Employee savedEmployee = employeeService.createEmployee(expectedEmployee);
+        assertThat(savedEmployee).isEqualTo(expectedEmployee);
     }
 
     @Test
@@ -78,8 +78,8 @@ public class EmployeeServiceTest extends AbstractDatabaseTest {
             add(new EmployeeRole(expectedEmployee, role));
         }});
 
-        Employee employee = employeeService.createEmployee(expectedEmployee);
-        assertThat(employee).isEqualTo(expectedEmployee);
+        Employee savedEmployee = employeeService.createEmployee(expectedEmployee);
+        assertThat(savedEmployee).isEqualTo(expectedEmployee);
     }
 
 

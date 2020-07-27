@@ -22,12 +22,12 @@ public class UserControllerTest extends AbstractDatabaseTest {
 
     @PostConstruct
     public void init() {
-        uri = "http://localhost:" + port;
+        uri = "https://localhost:" + port;
     }
 
     @Test
     public void get_users_should_return_status_200() {
-        RestAssured.given().
+        RestAssured.given().relaxedHTTPSValidation().
                 when().
                 get(uri+"/api/v1/users").
                 then().
@@ -37,7 +37,7 @@ public class UserControllerTest extends AbstractDatabaseTest {
 
     @Test
     public void get_unknown_user_should_return_status_404() {
-        RestAssured.given().
+        RestAssured.given().relaxedHTTPSValidation().
                 when().
                 get(uri+"/api/v1/users/1").
                 then().
