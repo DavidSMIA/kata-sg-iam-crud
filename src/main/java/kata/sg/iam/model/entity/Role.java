@@ -21,7 +21,7 @@ import java.util.UUID;
 public class Role implements Auditable {
 
     @Id
-    private String id;
+    private UUID id;
     private String code;
     private String description;
     @Embedded
@@ -63,7 +63,7 @@ public class Role implements Auditable {
     public static class RoleBuilder  {
         void prebuild(){
             if(this.id == null) {
-                id(UUID.randomUUID().toString());
+                id(UUID.randomUUID());
             }
         }
     }

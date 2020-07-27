@@ -3,6 +3,7 @@ package kata.sg.iam.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
 import kata.sg.iam.model.dto.user.EmployeeDTO;
+import kata.sg.iam.model.dto.user.EmployeePayload;
 import kata.sg.iam.model.exception.EmployeeNotFoundException;
 import kata.sg.iam.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,8 +37,8 @@ public class EmployeeController {
 
     @Operation(summary = "Update employee", tags = { "employee" })
     @PutMapping("/{id}")
-    public EmployeeDTO updateEmployee(@PathVariable("id") String userId, @RequestBody EmployeeDTO userPayload) {
-        return null;
+    public EmployeeDTO updateEmployee(@PathVariable("id") String userId, @RequestBody EmployeePayload userPayload) {
+        return new EmployeeDTO(employeeService.updateEmployee(userId, userPayload));
     }
 
     @Operation(summary = "Create employee", tags = { "employee" })

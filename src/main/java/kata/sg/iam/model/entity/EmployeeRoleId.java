@@ -8,6 +8,7 @@ import lombok.Setter;
 import javax.persistence.Embeddable;
 import java.io.Serializable;
 import java.util.Objects;
+import java.util.UUID;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -16,8 +17,8 @@ import java.util.Objects;
 @Embeddable
 public class EmployeeRoleId implements Serializable {
 
-    private String employeeId;
-    private String roleId;
+    private UUID employeeId;
+    private UUID roleId;
 
     @Override
     public boolean equals(Object o) {

@@ -21,7 +21,7 @@ import java.util.UUID;
 public class Employee implements Auditable {
 
     @Id
-    private String id;
+    private UUID id;
     private String lastname;
     private String firstname;
     @Embedded
@@ -63,7 +63,7 @@ public class Employee implements Auditable {
     public static class EmployeeBuilder  {
         void prebuild(){
            if(this.id == null) {
-               id(UUID.randomUUID().toString());
+               id(UUID.randomUUID());
            }
         }
     }

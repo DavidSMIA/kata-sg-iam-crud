@@ -4,7 +4,10 @@ import kata.sg.iam.model.entity.Role;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
-@Repository
-public interface RoleRepository extends PagingAndSortingRepository<Role, String> {
+import java.util.List;
+import java.util.UUID;
 
+@Repository
+public interface RoleRepository extends PagingAndSortingRepository<Role, UUID> {
+    public List<Role> findAllByCodeIn(Iterable<String> codes);
 }

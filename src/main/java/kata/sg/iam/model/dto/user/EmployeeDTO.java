@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Builder
@@ -17,7 +18,7 @@ import java.util.stream.Collectors;
 @Data
 public class EmployeeDTO {
 
-    private String id;
+    private UUID id;
     private String lastname;
     private String firstname;
     @Builder.Default

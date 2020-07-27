@@ -1,6 +1,6 @@
 CREATE TABLE employee
 (
-    id                  TEXT PRIMARY KEY,
+    id                  UUID PRIMARY KEY,
     lastname            TEXT NOT NULL,
     firstname           TEXT,
     created_at          TIMESTAMP NOT NULL,
@@ -9,8 +9,8 @@ CREATE TABLE employee
 
 CREATE TABLE role
 (
-    id                  TEXT PRIMARY KEY,
-    code                TEXT NOT NULL,
+    id                  UUID PRIMARY KEY,
+    code                TEXT NOT NULL UNIQUE,
     description         TEXT,
     created_at          TIMESTAMP NOT NULL,
     last_updated_at     TIMESTAMP NOT NULL
@@ -18,8 +18,8 @@ CREATE TABLE role
 
 CREATE TABLE employee_role
 (
-    employee_id        TEXT NOT NULL,
-    role_id        TEXT NOT NULL,
+    employee_id        UUID NOT NULL,
+    role_id        UUID NOT NULL,
     created_at          TIMESTAMP ,
     last_updated_at     TIMESTAMP ,
     PRIMARY KEY (employee_id, role_id),
