@@ -3,18 +3,16 @@ package kata.sg.iam.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
 import kata.sg.iam.model.dto.user.EmployeeDTO;
+import kata.sg.iam.model.exception.EmployeeNotFoundException;
 import kata.sg.iam.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/api/v1/users")
+@RequestMapping("/api/v1/employees")
 public class EmployeeController {
 
     EmployeeService employeeService;
@@ -32,9 +30,8 @@ public class EmployeeController {
 
     @Operation(summary = "Get employee by id", tags = { "employee" })
     @GetMapping("/{id}")
-    public ResponseEntity<EmployeeDTO> getEmployeeById(@PathVariable("id") String employeeId) {
-        return ResponseEntity.accepted()
-                .body(employeeService.findEmployeeById(employeeId).map(EmployeeDTO::new).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Employee not found")));
+    public EmployeeDTO getEmployeeById(@PathVariable("id") String employeeId) {
+        return employeeService.findEmployeeById(employeeId).map(EmployeeDTO::new).orElseThrow(() -> new EmployeeNotFoundException(employeeId));
     }
 
     @Operation(summary = "Update employee", tags = { "employee" })
