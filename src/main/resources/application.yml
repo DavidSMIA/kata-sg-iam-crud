@@ -1,3 +1,10 @@
 spring:
   application:
     name: kata-sg-iam-crud
+management:
+  security:
+    enabled: false
+
+  endpoints:
+    web:
+      base-path: /admin
