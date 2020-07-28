@@ -7,6 +7,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
@@ -24,6 +26,9 @@ public class EmployeeDTO {
     @Builder.Default
     private Set<EmployeeRoleDTO> roles = new HashSet<>();
 
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
+
     public EmployeeDTO(Employee employee) {
         id = employee.getId();
         firstname = employee.getFirstname();
@@ -31,6 +36,8 @@ public class EmployeeDTO {
         if(employee.getRoles() != null) {
             roles = employee.getRoles().stream().map(r -> new EmployeeRoleDTO(r.getRole())).collect(Collectors.toSet());
         }
+        createdAt = LocalDateTime.ofInstant(employee.getAudit().getCreatedAt(), ZoneOffset.UTC);
+        updatedAt = LocalDateTime.ofInstant(employee.getAudit().getLastUpdatedAt(), ZoneOffset.UTC);
     }
 
 }
