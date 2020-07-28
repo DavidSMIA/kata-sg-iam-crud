@@ -51,11 +51,19 @@ public class EmployeeService {
         return employeeRepository.findById(UUID.fromString(id));
     }
 
-    public Employee updateEmployee(String userId, EmployeePayload employeePayload) {
-        Employee employee = employeeRepository.findById(UUID.fromString(userId)).orElseThrow(() -> new EmployeeNotFoundException(userId));
+    public Employee updateEmployee(String employeeId, EmployeePayload employeePayload) {
+        Employee employee = employeeRepository.findById(UUID.fromString(employeeId)).orElseThrow(() -> new EmployeeNotFoundException(employeeId));
         if(employeePayload.getRoles() != null) {
-            //TODO : ne gere que l'ajout de nouveau rôle. Gérer la suppression de rôle. refacto vers un endpoint /employees/id/roles
-            Set<String> newRoles = employeePayload.getRoles().stream().filter(r -> !employee.getRoles().stream().map(er -> er.getRole().getCode()).collect(Collectors.toSet()).contains(r)).collect(Collectors.toSet());
+            /* TODO: Ne gere que l'ajout de nouveau rôle.
+                 Gérer la suppression de rôle.
+                 refacto vers un endpoint /employees/id/roles */
+            Set<String> newRoles = employeePayload.getRoles()
+                    .stream()
+                    .filter(r -> !employee.getRoles()
+                            .stream().map(er -> er.getRole().getCode())
+                            .collect(Collectors.toSet()).contains(r))
+                    .collect(Collectors.toSet());
+
             Set<EmployeeRole> employeeRolesFromCode = findEmployeeRolesFromCode(employee, newRoles);
             employee.getRoles().addAll(employeeRolesFromCode);
         }
@@ -64,6 +72,11 @@ public class EmployeeService {
 
         return employeeRepository.save(employee);
 
+    }
+
+    public void deleteEmployee(String employeeId) {
+        Employee employee = employeeRepository.findById(UUID.fromString(employeeId)).orElseThrow(() -> new EmployeeNotFoundException(employeeId));
+        employeeRepository.delete(employee);
     }
 
     private Set<EmployeeRole> findEmployeeRolesFromCode(Employee employee, Set<String> roleCodes) {

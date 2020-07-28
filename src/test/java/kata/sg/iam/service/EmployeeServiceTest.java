@@ -89,6 +89,34 @@ public class EmployeeServiceTest extends AbstractDatabaseTest {
         assertThat(savedEmployee.getLastname()).isEqualTo(expectedEmployee.getLastname());
     }
 
+    @Test
+    public void should_delete_employee_without_role() {
+
+        Employee existingEmployee = employeeRepository.save(createEmployees(1).get(0));
+
+        employeeService.deleteEmployee(existingEmployee.getId().toString());
+
+        assertThat(employeeRepository.findById(existingEmployee.getId())).isEmpty();
+    }
+
+    @Test
+    public void should_delete_employee_with_role() {
+
+        EmployeePayload expectedEmployee = EmployeePayload.builder()
+                .firstname("new")
+                .lastname("employee")
+                .roles(new HashSet<String>(){{
+                    add("DEV");
+                }})
+                .build();
+
+        Employee existingEmployee = employeeService.createEmployee(expectedEmployee);
+
+        employeeService.deleteEmployee(existingEmployee.getId().toString());
+
+        assertThat(employeeRepository.findById(existingEmployee.getId())).isEmpty();
+    }
+
 
     private List<Employee> createEmployees(int nbEmployees) {
         return IntStream.range(0, nbEmployees)

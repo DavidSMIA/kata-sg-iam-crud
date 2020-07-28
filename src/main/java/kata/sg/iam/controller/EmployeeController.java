@@ -46,4 +46,10 @@ public class EmployeeController {
     public EmployeeDTO createEmployee(@RequestBody EmployeePayload userPayload) {
         return new EmployeeDTO(employeeService.createEmployee(userPayload));
     }
+
+    @Operation(summary = "Delete employee by id", tags = { "employee" })
+    @DeleteMapping("/{id}")
+    public void deleteEmployeeById(@PathVariable("id") String employeeId) {
+        employeeService.deleteEmployee(employeeId);
+    }
 }

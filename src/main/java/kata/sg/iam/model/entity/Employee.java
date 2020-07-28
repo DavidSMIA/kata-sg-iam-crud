@@ -30,7 +30,7 @@ public class Employee implements Auditable {
     @OneToMany(
             mappedBy = "employee",
             fetch = FetchType.LAZY,
-            cascade =  { CascadeType.PERSIST,  CascadeType.MERGE }
+            cascade =  CascadeType.ALL
     )
     private Set<EmployeeRole> roles;
 

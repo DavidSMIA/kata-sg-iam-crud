@@ -1,6 +1,6 @@
 # KATA SGIAM CRUD
 
-Cette application permet de créer, modifier et récupérer des employés et des rôles.
+Cette application permet de créer, modifier, récupérer et supprimer des employés et leur rôles.
 Un employé peut avoir n rôles
 Un rôle peut être attribué à n employés
 
@@ -52,14 +52,13 @@ soit d'utiliser ApplicationContextAware et ApplicationContext pour récupérer d
 - Les rôles d'un employé sont créés et mis à jour lors de la création et modification de l'utilisateur.
   J'aurais souhaité à terme essayer de faire plutot cela via un CRUD sur les roles d'employé via le endpoint /api/v1/employees/{idemployee}/roles
 
-- Il manque le delete du CRUD employee.
-
 - Il manque pas mal de tests
 
 - Pour openapi, j'ai hésité entre un fichier et les annotations. J'ai opté pour les annotations pour gagner du temps (avec juste un exemple d'annotation possible)
 
 - J'ai hésité à créer des branches pour chacun des chantiers
 
+- J'ai hésité à utiliser un type String/text ou UUID pour stocker les id
 ---
 ```
 Le livrable n°1:
