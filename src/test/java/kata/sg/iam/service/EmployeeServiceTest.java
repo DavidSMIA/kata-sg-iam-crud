@@ -69,6 +69,22 @@ public class EmployeeServiceTest extends AbstractDatabaseTest {
                 .build();
 
         Employee savedEmployee = employeeService.createEmployee(expectedEmployee);
+
+        assertThat(savedEmployee.getFirstname()).isEqualTo(expectedEmployee.getFirstname());
+        assertThat(savedEmployee.getLastname()).isEqualTo(expectedEmployee.getLastname());
+    }
+
+
+    @Test
+    public void should_update_employee_without_role() {
+
+        Employee existingEmployee = employeeRepository.save(createEmployees(1).get(0));
+        EmployeePayload expectedEmployee = EmployeePayload.builder()
+                .firstname("modif")
+                .lastname("employee")
+                .build();
+
+        Employee savedEmployee = employeeService.updateEmployee(existingEmployee.getId().toString(), expectedEmployee);
         assertThat(savedEmployee.getFirstname()).isEqualTo(expectedEmployee.getFirstname());
         assertThat(savedEmployee.getLastname()).isEqualTo(expectedEmployee.getLastname());
     }
