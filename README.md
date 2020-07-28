@@ -1,4 +1,4 @@
-#KATA SGIAM CRUD
+# KATA SGIAM CRUD
 
 Cette application permet de créer, modifier et récupérer des employés et des rôles.
 Un employé peut avoir n rôles
@@ -57,6 +57,8 @@ soit d'utiliser ApplicationContextAware et ApplicationContext pour récupérer d
 - Il manque pas mal de tests
 
 - Pour openapi, j'ai hésité entre un fichier et les annotations. J'ai opté pour les annotations pour gagner du temps (avec juste un exemple d'annotation possible)
+
+- J'ai hésité à créer des branches pour chacun des chantiers
 
 ---
 ```
