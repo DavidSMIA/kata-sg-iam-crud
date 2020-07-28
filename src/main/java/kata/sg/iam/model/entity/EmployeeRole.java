@@ -3,6 +3,7 @@ package kata.sg.iam.model.entity;
 
 import kata.sg.iam.model.entity.audit.Audit;
 import kata.sg.iam.model.entity.audit.Auditable;
+import kata.sg.iam.model.entity.audit.AuditingListener;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -13,6 +14,7 @@ import java.util.Objects;
 @Getter
 @Setter
 @NoArgsConstructor
+@EntityListeners(AuditingListener.class)
 @Entity(name = "employee_role")
 public class EmployeeRole implements Auditable {
 

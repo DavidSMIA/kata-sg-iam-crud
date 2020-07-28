@@ -24,11 +24,4 @@ public class EmployeeRoleDTO {
         description = role.getDescription();
     }
 
-    public Role toRole() {
-        return Role.builder()
-                .id(getId())
-                .code(getCode())
-                .description(getDescription())
-                .build();
-    }
 }

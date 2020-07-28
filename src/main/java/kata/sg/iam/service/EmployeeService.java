@@ -54,7 +54,10 @@ public class EmployeeService {
     public Employee updateEmployee(String userId, EmployeePayload employeePayload) {
         Employee employee = employeeRepository.findById(UUID.fromString(userId)).orElseThrow(() -> new EmployeeNotFoundException(userId));
         if(employeePayload.getRoles() != null) {
-            employee.setRoles(findEmployeeRolesFromCode(employee, employeePayload.getRoles()));
+            //TODO : ne gere que l'ajout de nouveau rôle. Gérer la suppression de rôle. refacto vers un endpoint /employees/id/roles
+            Set<String> newRoles = employeePayload.getRoles().stream().filter(r -> !employee.getRoles().stream().map(er -> er.getRole().getCode()).collect(Collectors.toSet()).contains(r)).collect(Collectors.toSet());
+            Set<EmployeeRole> employeeRolesFromCode = findEmployeeRolesFromCode(employee, newRoles);
+            employee.getRoles().addAll(employeeRolesFromCode);
         }
         employee.setFirstname(employeePayload.getFirstname());
         employee.setLastname(employeePayload.getLastname());

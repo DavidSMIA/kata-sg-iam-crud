@@ -33,16 +33,4 @@ public class EmployeeDTO {
         }
     }
 
-    public Employee toEmployee() {
-        Employee employee = Employee.builder()
-                .id(getId())
-                .firstname(getFirstname())
-                .lastname(getLastname())
-                .build();
-        employee.setRoles(roles.stream().map(r -> new EmployeeRole(employee, r.toRole())).collect(Collectors.toSet()));
-        return employee;
-    }
-
-
-
 }
